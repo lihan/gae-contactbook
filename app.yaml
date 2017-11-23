@@ -14,7 +14,7 @@ handlers:
 
 libraries:
 - name: flask
-  version: "latest"
+  version: "0.12"
 
 - name: jinja2
   version: "2.6"
