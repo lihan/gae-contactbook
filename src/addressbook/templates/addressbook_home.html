@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My Contact</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet"
+          href="https://unpkg.com/bootstrap-material-design@4.0.0-beta.4/dist/css/bootstrap-material-design.min.css"
+          integrity="sha384-R80DC0KVBO4GSTw+wZ5x2zn2pu4POSErBkf8/fSFhPXHxvHJydT0CSgAP2Yo2r4I" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-12 col-md-8">
+            <div class="jumbotron">
+                <h1 class="display-3">My Contact</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-md-center">
+        <div class="col-sm-12 col-md-8">
+            <div class="js-backend-info"></div>
+        </div>
+
+        <div class="col-sm-12 col-md-8">
+            <form method="POST" action="/address_book/api/import_csv/" class="js-csv-upload-form">
+                <div class="form-group">
+                    <label for="id-file-input" class="bmd-label-floating">Upload contacts CSV</label>
+                    <input type="file" name="csv_file" id="id-file-input"/>
+                    <button type="submit" class="js-form-submit btn btn-raised btn-sm" name="submit">Submit</button>
+                </div>
+                <div class="form-check alert alert-warning js-allow-override">
+                    <label class="form-check-label">
+                        <input name="allow_override" class="form-check-input js-input-allow-override" type="checkbox">
+                        Allow override
+                    </label>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="col-sm-12 col-md-8">
+            <h3 class="display-4">Existing contacts</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contact in contacts %}
+                    <tr>
+                        <td>{{ contact.first_name }}</td>
+                        <td>{{ contact.last_name }}</td>
+                        <td>{{ contact.email }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/vendors/tmpl.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+{% raw %}
+<script id="id-server-error-tmpl" type="text/template">
+    <div class="alert alert-danger" role="alert">
+        <strong>Oh snap!</strong> Following error(s) happened:
+        <ul class="list-group ">
+            {% for (var i=0; i<o.errors.length; i++) { %}
+            <li style="margin-left:35px;">{%=o.errors[i] %}</li>
+            {% } %}
+        </ul>
+        <p>However, you can choose to tick the <strong>Allow override</strong> checkbox below to
+            replace existing entries</p>
+    </div>
+</script>
+
+<script id="id-upload-success" type="text/template">
+    <div class="alert alert-success" role="alert">
+        <strong>Well done!</strong> You successfully uploaded <strong>{%=o.count %}</strong> contacts
+        Refresh the page to view
+    </div>
+</script>
+{% endraw %}
+</body>
+</html>
