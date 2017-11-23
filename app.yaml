@@ -1,0 +1,21 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+
+handlers:
+
+- url: /favicon\.ico
+  static_files: src/static/img/favicon.ico
+  upload: src/static/img/favicon\.ico
+
+- url: .*  # This regex directs all routes to main.app
+  script: wsgi.app
+
+libraries:
+- name: flask
+  version: "latest"
+
+- name: jinja2
+  version: "2.6"
+
